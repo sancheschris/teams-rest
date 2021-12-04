@@ -1,7 +1,9 @@
 package com.tempo.teams.controller;
 
 
-import com.tempo.teams.service.TeamsServiceImpl;
+import com.tempo.teams.presenter.ResponseUser;
+import com.tempo.teams.presenter.ResponseUsers;
+import com.tempo.teams.service.impl.TeamsServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Api(tags = "Teams Rest")
 @RestController
@@ -21,14 +25,14 @@ public class TeamsController {
 
     @ApiOperation(value = "GetTest")
     @GetMapping
-    public ResponseEntity<Object> test() {
-        return teamsServiceImpl.retornaUsers();
+    public List<ResponseUsers> getAllUsers() {
+        return teamsServiceImpl.getAllUsers();
     }
 
     @ApiOperation(value = "GetTest")
     @GetMapping("/user/{id}")
-    public ResponseEntity<Object> test(@PathVariable("id") String id) {
-        return teamsServiceImpl.retornaUser(id);
+    public ResponseUser test(@PathVariable("id") String id) {
+        return teamsServiceImpl.getUserById(id);
     }
 
     @ApiOperation(value = "getTeamById")

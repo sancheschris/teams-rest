@@ -1,6 +1,7 @@
 package com.tempo.teams.consumers.impl;
 
 import com.tempo.teams.consumers.TeamClient;
+import com.tempo.teams.exceptions.BadRequestException;
 import com.tempo.teams.presenter.ResponseTeam;
 import com.tempo.teams.presenter.ResponseTeams;
 import com.tempo.teams.utils.RestClientUtils;
@@ -35,7 +36,7 @@ public class TeamClientImpl implements TeamClient {
             return restTemplate.exchange(resourceUri, HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<List<ResponseTeams>>(){}).getBody();
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw e;
+            throw new BadRequestException(e.getMessage(), null);
         }
     }
 
@@ -48,7 +49,7 @@ public class TeamClientImpl implements TeamClient {
             return restTemplate.exchange(resourceUri, HttpMethod.GET, new HttpEntity<>(headers), ResponseTeam.class).getBody();
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw e;
+            throw new BadRequestException(e.getMessage(), null);
         }
     }
 
