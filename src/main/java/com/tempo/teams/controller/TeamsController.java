@@ -31,4 +31,15 @@ public class TeamsController {
         return teamsServiceImpl.retornaUser(id);
     }
 
+    @ApiOperation(value = "getTeamById")
+    @GetMapping("/teams/{id}")
+    public ResponseEntity<Object> getTeamById(@PathVariable("id") String id) {
+        return teamsServiceImpl.getTeamById(id);
+    }
+
+    @ApiOperation(value = "getTeams")
+    @GetMapping("/teams")
+    public ResponseEntity<Object> getTeams() {
+        return teamsServiceImpl.getAllTeams();
+    }
 }

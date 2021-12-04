@@ -1,15 +1,13 @@
 package com.tempo.teams.consumers;
 
-import com.tempo.teams.dto.UserDto;
-import com.tempo.teams.model.User;
-import com.tempo.teams.presenter.UserResponse;
-import com.tempo.teams.presenter.UsersResponse;
+import com.tempo.teams.presenter.ResponseUser;
+import com.tempo.teams.presenter.ResponseUsers;
 
 import java.util.List;
 
 public interface UserClient {
 
-    List<UsersResponse> getUsers();
+    List<ResponseUsers> getUsers();
 
-    UserResponse findOneUser(String id);
+    ResponseUser getUserById(String id);
 }

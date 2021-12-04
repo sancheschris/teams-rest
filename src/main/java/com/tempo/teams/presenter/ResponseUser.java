@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse {
+public class ResponseUser {
 
     private String id;
     private String firstName;
     private String lastName;
     private String displayName;
     private String avatarUrl;
-    private String Location;
+    private String location;
 
     @Override
     public String toString() {
