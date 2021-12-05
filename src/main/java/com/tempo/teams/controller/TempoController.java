@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,20 +27,26 @@ public class TempoController {
     }
 
     @ApiOperation(value = "Create a new role")
-    @PostMapping("/role/{enumRoles}")
-    public ResponseEntity<Object> createRole(@PathVariable("enumRoles") EnumRoles enumRoles) {
-        return tempoServiceImpl.createNewRole(enumRoles);
+    @PostMapping("/id/{role}")
+    public ResponseEntity<Object> createRole(
+                                             @PathVariable("role") String role,
+                                             String id,
+//                                             @ApiParam(value = "TeamId", example = "0165537a-d71d-4b01-88f3-14f01c2615ad")
+                                             String teamId,
+//                                             @ApiParam(value = "UserId", example = "0165537a-d71d-4b01-88f3-14f01c2615ad")
+                                             String userId) {
+        return tempoServiceImpl.createNewRole(id, role,teamId,userId);
     }
 
     @ApiOperation(value = "Look up memberships for a role")
     @GetMapping("/role/{enumRoles}")
-    public ResponseEntity<Object> getMembershipByRole(@PathVariable("enumRoles") EnumRoles enumRoles) {
-        return tempoServiceImpl.getMembershipsByRole(enumRoles);
+    public ResponseEntity<Object> getMembershipByRole(@PathVariable("enumRoles") String roles) {
+        return tempoServiceImpl.getMembershipsByRole(roles);
     }
 
     @ApiOperation(value = "Assign a role to a member")
-    @PutMapping("/role/{id}/")
-    public ResponseEntity<Object> assignRoleMember(@ApiParam(value = "Id do user", required = true) @PathVariable("id") String id, EnumRoles enumRoles) {
-        return tempoServiceImpl.assignRoleMember(id, enumRoles);
+    @PutMapping("/role/{roles}")
+    public ResponseEntity<Object> assignRoleMember(String id, String teamId, String userId, @PathVariable("roles")String roles) {
+        return tempoServiceImpl.assignRoleMember(id, roles, teamId, userId);
     }
 }

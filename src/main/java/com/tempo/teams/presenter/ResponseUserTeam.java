@@ -1,7 +1,8 @@
 package com.tempo.teams.presenter;
 
-import com.tempo.teams.enums.EnumRoles;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -9,5 +10,5 @@ import lombok.*;
 public class ResponseUserTeam {
 
     private String id;
-    private EnumRoles enumRoles;
+    private String roles;
 }

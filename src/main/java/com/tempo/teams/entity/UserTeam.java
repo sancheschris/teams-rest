@@ -12,7 +12,7 @@ import org.hibernate.annotations.NotFoundAction;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "user_team")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -36,20 +36,23 @@ public class UserTeam {
             action = NotFoundAction.IGNORE)
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EnumRoles enumRoles = EnumRoles.DEVELOPER;
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "enum_roles", nullable = false)
+//    private EnumRoles enumRoles = EnumRoles.DEVELOPER;
+
+    @Column(name = "roles", nullable = false)
+    private String roles = "Developer";
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserTeam userTeam = (UserTeam) o;
-        return Objects.equals(id, userTeam.id) && Objects.equals(team, userTeam.team) && Objects.equals(user, userTeam.user) && enumRoles == userTeam.enumRoles;
+        return Objects.equals(id, userTeam.id) && Objects.equals(team, userTeam.team) && Objects.equals(user, userTeam.user) && roles == userTeam.roles;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, team, user, enumRoles);
+        return Objects.hash(id, team, user, roles);
     }
 }

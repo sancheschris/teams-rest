@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.tempo</groupId>
 	<artifactId>teams-rest-api-service</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>1.1.6-SNAPSHOT</version>
 	<name>teams-rest-api-service</name>
 	<description>Teams Rest API Service</description>
 	<properties>
