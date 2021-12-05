@@ -1,38 +1,56 @@
 package com.tempo.teams.entity;
 
-import com.google.gson.Gson;
-import com.tempo.teams.enums.EnumRoles;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tbl_team")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 public class Team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
     private String teamLeadId;
-    @OneToMany(mappedBy = "team")
-    private List<User> teamMembers;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EnumRoles roles = EnumRoles.DEVELOPER;
+    @JsonIgnore
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserTeam> userTeams = new ArrayList<>();
+
+    public Team() {
+    }
+
+    public Team(String id, String name, String teamLeadId) {
+        this.id = id;
+        this.name = name;
+        this.teamLeadId = teamLeadId;
+    }
+
+    public Team(String name, String teamLeadId) {
+        this.name = name;
+        this.teamLeadId = teamLeadId;
+    }
 
     @Override
-    public String toString() {
-        return new Gson().toJson(this);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(id, team.id) && Objects.equals(name, team.name) && Objects.equals(teamLeadId, team.teamLeadId) && Objects.equals(userTeams, team.userTeams);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, teamLeadId, userTeams);
     }
 }

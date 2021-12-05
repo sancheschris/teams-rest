@@ -30,10 +30,10 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
                 errorGetData = new Gson().fromJson(msgErro, ResponseError.class);
             } catch (Exception e) {
                 log.error(e.getMessage());
-                throw new InternalServerErrorException("Não foi possível converter o erro em: " + ResponseError.class);
+                throw new InternalServerErrorException("Não foi possível converter o erro em: " + ResponseError.class, null);
             }
-            throw new BadRequestException(errorGetData.getErros().get(0).getCode(), errorGetData);
+            throw new InternalServerErrorException(errorGetData.getErros().get(0).getCode(), errorGetData);
         }
-        throw new InternalServerErrorException(msgErro);
+        throw new InternalServerErrorException(msgErro, null);
     }
 }
