@@ -1,7 +1,5 @@
 package com.tempo.teams.service.impl;
 
-import com.tempo.teams.consumers.TeamClient;
-import com.tempo.teams.consumers.UserClient;
 import com.tempo.teams.entity.UserTeam;
 import com.tempo.teams.exceptions.BadRequestException;
 import com.tempo.teams.exceptions.InternalServerErrorException;
@@ -22,12 +20,6 @@ import java.util.List;
 public class TempoServiceImpl {
 
     @Autowired
-    private UserClient userClient;
-
-    @Autowired
-    private TeamClient teamClient;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -38,7 +30,13 @@ public class TempoServiceImpl {
 
 
     public ResponseEntity<Object> getRoleByUserIdAndTeamId(String teamId, String userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(userTeamRepository.getRoleByTeamIdAndUserId(teamId, userId));
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userTeamRepository.getRoleByTeamIdAndUserId(teamId, userId));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        }
+
     }
 
     public ResponseEntity<Object> createNewRole(String id, String role, String teamId, String userId) {
@@ -60,8 +58,14 @@ public class TempoServiceImpl {
 
     public ResponseEntity<Object> getMembershipsByRole(String roles) {
 
-        var byEnumRoles = userTeamRepository.findTopByRoles(roles);
-        return ResponseEntity.status(HttpStatus.OK).body(byEnumRoles);
+        try {
+            var byEnumRoles = userTeamRepository.findTopByRoles(roles);
+            return ResponseEntity.status(HttpStatus.OK).body(byEnumRoles);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        }
+
     }
 
     public ResponseEntity<Object> assignRoleMember(String role, String teamId, String userId) {
@@ -70,13 +74,10 @@ public class TempoServiceImpl {
             var idTeam = teamRepository.findById(teamId);
             var idUser = userRepository.findById(userId);
 
-            userTeamRepository.updateRole(role, idTeam.get().getId(), idUser.get().getId());
-
-//            ResponseUserTeam responseUserTeam = new ResponseUserTeam();
-//            responseUserTeam.setId(userTeam.get().getId());
-//            responseUserTeam.setRoles(userTeam.get().getRoles());
-
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("UPDATED");
+            if (idTeam.isPresent() && idUser.isPresent()) {
+                userTeamRepository.updateRole(role, idTeam.get().getId(), idUser.get().getId());
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("UPDATED");
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new BadRequestException(e.getMessage());

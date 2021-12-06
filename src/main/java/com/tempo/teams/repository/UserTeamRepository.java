@@ -13,17 +13,11 @@ public interface UserTeamRepository extends JpaRepository<UserTeam, String> {
 
     UserTeam findTopByRoles(String roles);
 
-//    UserTeam findByTeamIdAndUserId(String teamId, String userId);
-
-//    @Transactional
-//    @Query(value = "SELECT ut.enumRoles FROM UserTeam ut where ut.team_id = :teamId and ut.user_id = :userId", nativeQuery = true)
-//    List<UserTeam> getRoleByTeamIdAndUserId(@Param("teamId") String teamId, @Param("userId") String userId);
-
     @Modifying(flushAutomatically = true)
     @Transactional
     @Query(value = "INSERT INTO user_team" +
             "  (id, roles, team_id, user_id)" +
-            " VALUES (':id', ':role', 'teamId', 'userId')",
+            " VALUES (:id, :role, :teamId, :userId)",
             nativeQuery = true)
     void insertNewRole(@Param("id") String id,
                        @Param("role") String role,
@@ -32,12 +26,6 @@ public interface UserTeamRepository extends JpaRepository<UserTeam, String> {
 
     @Query("SELECT ut FROM user_team ut where ut.team.id = :teamId and ut.user.id = :userId")
     List<UserTeam> getRoleByTeamIdAndUserId(@Param("teamId") String teamId, @Param("userId") String userId);
-
-//    @Query("SELECT ut FROM user_team ut where ut.roles = :enumRole")
-//    UserTeam findByRoles(@Param("enumRole") String enumRole);
-
-//    @Query(value = "SELECT * FROM user_team where team_id = :teamId and user_id = :userId", nativeQuery = true)
-//    UserTeam findByTeamIdAndUserId(@Param("teamId") String teamId, @Param("userId")String userId);
 
     @Modifying
     @Transactional

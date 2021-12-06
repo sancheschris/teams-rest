@@ -19,7 +19,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ResponseError> handleBadRequest(BadRequestException ex, WebRequest request) {
+    public ResponseEntity<ResponseError> handleBadRequest(Exception ex, WebRequest request) {
 
         ResponseError rs = getErrorList("400", ex.getMessage(), "BAD REQUEST EXCEPTION");
         return new ResponseEntity<>(rs, new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -27,10 +27,10 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(InternalServerErrorException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ResponseError> handleBadRequest(InternalServerErrorException ex, WebRequest request) {
+    public ResponseEntity<ResponseError> handleInternalServer(Exception ex, WebRequest request) {
 
         ResponseError rs = getErrorList("500", ex.getMessage(), "INTERNAL SERVER ERROR EXCEPTION");
-        return new ResponseEntity<>(rs, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(rs, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private ResponseError getErrorList(String code, String detail, String title) {

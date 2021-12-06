@@ -129,9 +129,11 @@ public class SaveDataFromApisTest {
         Team team = new Team(responseTeam.getId(), responseTeam.getName(), responseTeam.getTeamLeadId());
 
 
-
         saveDataFromApis.saveUserAndTeamFromAPIToDatabase();
 
+        assertEquals(user, listUsers.get(0));
+        assertEquals(user.hashCode(), -603073772);
+        assertNotNull(reponseUser.toString());
         verify(userClient, atLeastOnce()).getUsers();
         verify(userClient, atLeastOnce()).getUserById(anyString());
         verify(teamClient, atLeastOnce()).getTeams();

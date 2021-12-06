@@ -1,6 +1,5 @@
 package com.tempo.teams.entity;
 
-import com.tempo.teams.enums.EnumRoles;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,10 +34,6 @@ public class UserTeam {
     @NotFound(
             action = NotFoundAction.IGNORE)
     private User user;
-
-//    @Enumerated(EnumType.STRING)
-//    @Column(name = "enum_roles", nullable = false)
-//    private EnumRoles enumRoles = EnumRoles.DEVELOPER;
 
     @Column(name = "roles", nullable = false)
     private String roles = "Developer";

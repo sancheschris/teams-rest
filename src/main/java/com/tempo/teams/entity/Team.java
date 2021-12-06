@@ -36,11 +36,6 @@ public class Team {
         this.teamLeadId = teamLeadId;
     }
 
-    public Team(String name, String teamLeadId) {
-        this.name = name;
-        this.teamLeadId = teamLeadId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

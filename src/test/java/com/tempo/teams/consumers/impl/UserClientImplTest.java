@@ -59,29 +59,30 @@
 //        headers.setContentType(MediaType.APPLICATION_JSON);
 //    }
 //
-////    @Test
-////    public void getUsersFail() {
-////
-////        //cenario
-////        cenarioStartTest();
-////
-////        ResponseUsers responseUsers = new ResponseUsers("371d2ee8-cdf4-48cf-9ddb-04798b79ad9e", "randyFunk");
-////        List<ResponseUsers> responseUsersList = new ArrayList<>();
-////        responseUsersList.add(responseUsers);
-////
-////        //ação
-////        when(restTemplate.exchange(resourceUri,
-////                HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<List<ResponseUsers>>() {
-////                }).getBody())
-////                .thenThrow(new InternalServerErrorException("teste", null));
-////
-////        try {
-////            userClientImpl.getUsers();
-////            fail();
-////        } catch (Exception e) {
-////            assertEquals("teste", e.getMessage());
-////        }
-////    }
+//    @Test
+//    public void getUsersFail() {
+//
+//        //cenario
+//        cenarioStartTest();
+//
+//        ResponseUsers responseUsers = new ResponseUsers("371d2ee8-cdf4-48cf-9ddb-04798b79ad9e", "randyFunk");
+//        List<ResponseUsers> responseUsersList = new ArrayList<>();
+//        responseUsersList.add(responseUsers);
+//
+//        //ação
+//        when(restTemplate.exchange(resourceUri,
+//                HttpMethod.GET, new HttpEntity<>(headers), new ParameterizedTypeReference<List<ResponseUsers>>() {
+//                }).getBody())
+//                .thenThrow(new InternalServerErrorException("teste", null));
+//
+//
+//        try {
+//            userClientImpl.getUsers();
+//            fail();
+//        } catch (Exception e) {
+//            assertEquals("teste", e.getMessage());
+//        }
+//    }
 //
 ////    @Test
 ////    public void getUsersSuccess() {

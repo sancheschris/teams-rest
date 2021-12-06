@@ -22,5 +22,4 @@ public class ResponseError {
     @ApiModelProperty(position = 0)
     @Valid
     private List<Errors> erros = null;
-
 }
