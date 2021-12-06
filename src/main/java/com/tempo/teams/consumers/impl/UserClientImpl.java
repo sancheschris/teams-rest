@@ -1,6 +1,8 @@
 package com.tempo.teams.consumers.impl;
 
 import com.tempo.teams.consumers.UserClient;
+import com.tempo.teams.exceptions.BadRequestException;
+import com.tempo.teams.exceptions.InternalServerErrorException;
 import com.tempo.teams.presenter.ResponseUser;
 import com.tempo.teams.presenter.ResponseUsers;
 import com.tempo.teams.utils.RestClientUtils;
@@ -37,7 +39,7 @@ public class UserClientImpl implements UserClient {
                     HttpMethod.GET,new HttpEntity<>(headers), new ParameterizedTypeReference<List<ResponseUsers>>(){}).getBody();
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw e;
+            throw new InternalServerErrorException(e.getMessage(), null);
         }
     }
 
@@ -51,7 +53,7 @@ public class UserClientImpl implements UserClient {
                     HttpMethod.GET,new HttpEntity<>(headers), ResponseUser.class).getBody();
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw e;
+            throw new InternalServerErrorException(e.getMessage(), null);
         }
     }
 }
