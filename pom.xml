@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.tempo</groupId>
 	<artifactId>teams-rest-api-service</artifactId>
-	<version>1.1.8-SNAPSHOT</version>
+	<version>1.1.9-SNAPSHOT</version>
 	<name>teams-rest-api-service</name>
 	<description>Teams Rest API Service</description>
 	<properties>
@@ -123,6 +123,12 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20211205</version>
 		</dependency>
 
 		<dependency>

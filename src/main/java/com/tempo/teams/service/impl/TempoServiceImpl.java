@@ -7,6 +7,7 @@ import com.tempo.teams.presenter.ResponseUserTeam;
 import com.tempo.teams.repository.TeamRepository;
 import com.tempo.teams.repository.UserRepository;
 import com.tempo.teams.repository.UserTeamRepository;
+import com.tempo.teams.service.TempoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class TempoServiceImpl {
+public class TempoServiceImpl implements TempoService {
 
     @Autowired
     private UserRepository userRepository;
@@ -76,12 +77,11 @@ public class TempoServiceImpl {
 
             if (idTeam.isPresent() && idUser.isPresent()) {
                 userTeamRepository.updateRole(role, idTeam.get().getId(), idUser.get().getId());
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("UPDATED");
             }
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("UPDATED");
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new BadRequestException(e.getMessage());
         }
-
     }
 }

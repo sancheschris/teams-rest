@@ -1,5 +1,6 @@
 package com.tempo.teams.utils;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -16,5 +17,9 @@ public class RestClientUtils {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
         return headers;
+    }
+
+    public static HttpEntity buildHttpEntity() {
+        return new HttpEntity(buildHttpHeaders());
     }
 }
