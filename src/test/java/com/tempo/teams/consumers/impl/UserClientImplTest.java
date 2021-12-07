@@ -2,6 +2,7 @@ package com.tempo.teams.consumers.impl;
 
 import com.google.gson.Gson;
 import com.tempo.teams.exceptions.InternalServerErrorException;
+import com.tempo.teams.presenter.ResponseUser;
 import com.tempo.teams.presenter.ResponseUsers;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +51,7 @@ public class UserClientImplTest {
     }
 
     private void cenarioStartTestById() {
-        this.resourceUri = URI.create("https://www.teste.com.br/id");
+        this.resourceUri = URI.create("https://www.teste.com.br/371d2ee8-cdf4-48cf-9ddb-04798b79ad9e");
         this.headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -93,5 +94,42 @@ public class UserClientImplTest {
         var expected = userClientImpl.getUsers();
 
         assertEquals("randyFunk", expected.get(0).getDisplayName());
+    }
+
+    @Test
+    public void getUserByIdSuccess() {
+
+        //cenario
+        cenarioStartTestById();
+
+        ResponseUser responseUser = new ResponseUser();
+        responseUser.setId("371d2ee8-cdf4-48cf-9ddb-04798b79ad9e");
+        responseUser.setFirstName("Chris");
+
+        when(restTemplate.exchange(resourceUri, HttpMethod.GET, new HttpEntity<>(headers), ResponseUser.class))
+                .thenReturn(ResponseEntity.ok(responseUser));
+
+        //ação
+        var expected = userClientImpl.getUserById("371d2ee8-cdf4-48cf-9ddb-04798b79ad9e");
+
+        assertEquals(responseUser, expected);
+        assertEquals("371d2ee8-cdf4-48cf-9ddb-04798b79ad9e", expected.getId());
+    }
+
+    @Test
+    public void getUserByIdFails() {
+        //cenario
+        cenarioStartTestById();
+
+        when(restTemplate.exchange(resourceUri, HttpMethod.GET, new HttpEntity<>(headers), ResponseUser.class))
+                .thenThrow(new InternalServerErrorException("teste", null));
+
+        //ação
+        try {
+            userClientImpl.getUserById("371d2ee8-cdf4-48cf-9ddb-04798b79ad9e");
+            fail();
+        } catch (Exception e) {
+            assertEquals("teste", e.getMessage());
+        }
     }
 }

@@ -5,6 +5,8 @@ import com.tempo.teams.consumers.UserClient;
 import com.tempo.teams.dto.UserDto;
 import com.tempo.teams.entity.Team;
 import com.tempo.teams.entity.User;
+import com.tempo.teams.entity.UserTeam;
+import com.tempo.teams.exceptions.BadRequestException;
 import com.tempo.teams.exceptions.InternalServerErrorException;
 import com.tempo.teams.presenter.ResponseTeam;
 import com.tempo.teams.presenter.ResponseTeams;
@@ -85,6 +87,48 @@ public class SaveDataFromApisTest {
     }
 
     @Test
+    public void saveUserAndTeamFromApiToDataBaseFailsWhenTeamRepositorySaving() {
+
+        List<Team> teamList = new ArrayList<>();
+        when(teamRepository.saveAll(teamList)).thenThrow(new BadRequestException("teste"));
+
+       try {
+           saveDataFromApis.saveUserAndTeamFromAPIToDatabase();
+           fail();
+       } catch (Exception e) {
+           assertEquals("teste", e.getMessage());
+       }
+    }
+
+    @Test
+    public void saveUserAndTeamFromApiToDataBaseFailsWhenUserTeamRepositorySaving() {
+
+        List<UserTeam> userTeams = new ArrayList<>();
+        when(userTeamRepository.saveAll(userTeams)).thenThrow(new BadRequestException("teste"));
+
+        try {
+            saveDataFromApis.saveUserAndTeamFromAPIToDatabase();
+            fail();
+        } catch (Exception e) {
+            assertEquals("teste", e.getMessage());
+        }
+    }
+
+    @Test
+    public void saveUserAndTeamFromApiToDataBaseFailsWhenUserRepositorySaving() {
+
+        List<User> listUsers = new ArrayList<>();
+        when(userRepository.saveAll(listUsers)).thenThrow(new BadRequestException("teste"));
+
+        try {
+            saveDataFromApis.saveUserAndTeamFromAPIToDatabase();
+            fail();
+        } catch (Exception e) {
+            assertEquals("teste", e.getMessage());
+        }
+    }
+
+    @Test
     public void GetUsersById() {
 
         //cenario
@@ -118,6 +162,7 @@ public class SaveDataFromApisTest {
         userDtos.add(new UserDto("ee91a519-fefa-48a7-bdf7-672bde38aef9"));
         userDtos.add(new UserDto("197c2b23-1218-44d0-b6b8-d757ba004515"));
         userDtos.add(new UserDto("e947058e-2d5f-47d9-925b-27bcab14c38e"));
+        userDtos.add(new UserDto("fd282131-d8aa-4819-b0c8-d9e0bfb1b75c"));
 
         List<UserDto> teamMemberIds = new ArrayList<>();
         teamMemberIds.addAll(userDtos);
