@@ -53,9 +53,8 @@ public class TeamClientImpl implements TeamClient {
     public ResponseTeam getTeamById(String id) {
         try {
             var resourceUri = URI.create(url + id);
-            var headers = RestClientUtils.buildHttpHeaders();
 
-            return restTemplate.exchange(resourceUri, HttpMethod.GET, new HttpEntity<>(headers), ResponseTeam.class).getBody();
+            return restTemplate.exchange(resourceUri, HttpMethod.GET, RestClientUtils.buildHttpEntity(), ResponseTeam.class).getBody();
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new InternalServerErrorException(e.getMessage(), null);
