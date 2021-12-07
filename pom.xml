@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.tempo</groupId>
 	<artifactId>teams-rest-api-service</artifactId>
-	<version>1.1.11-SNAPSHOT</version>
+	<version>1.1.12-SNAPSHOT</version>
 	<name>teams-rest-api-service</name>
 	<description>Teams Rest API Service</description>
 	<properties>
@@ -96,6 +96,18 @@
 			<artifactId>mockito-core</artifactId>
 			<version>3.5.10</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito2</artifactId>
+			<version>2.0.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>2.0.9</version>
 		</dependency>
 
 		<dependency>
