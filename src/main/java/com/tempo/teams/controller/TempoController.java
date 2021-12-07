@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,18 +21,20 @@ public class TempoController {
     @ApiOperation(value = "Look up a role for a membership, where membership is defined by a user id and a \n" +
             "team id")
     @GetMapping("/role/{teamId}/{userId}")
-    public ResponseEntity<Object> getRoleByUserAndTeamId(@PathVariable("teamId") String teamId, @PathVariable("userId") String userId) {
+    public ResponseEntity<Object> getRoleByUserAndTeamId( @ApiParam(value = "TeamId", example = "0165537a-d71d-4b01-88f3-14f01c2615ad") @PathVariable("teamId") String teamId,
+                                                          @ApiParam(value = "UserId", example = "3029ce81-1822-4065-a9a2-3d0d1eb5d3ef") @PathVariable("userId") String userId) {
         return tempoServiceImpl.getRoleByUserIdAndTeamId(teamId, userId);
     }
 
     @ApiOperation(value = "Create a new role")
     @PostMapping("/id/{role}")
-    public ResponseEntity<Object> createRole(
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Object> createRole(@ApiParam(value = "Role", example = "Developer, Tester, Product Owner")
                                              @PathVariable("role") String role,
                                              String id,
                                              @ApiParam(value = "TeamId", example = "0165537a-d71d-4b01-88f3-14f01c2615ad")
                                              String teamId,
-                                             @ApiParam(value = "UserId", example = "0165537a-d71d-4b01-88f3-14f01c2615ad")
+                                             @ApiParam(value = "UserId", example = "3029ce81-1822-4065-a9a2-3d0d1eb5d3ef")
                                              String userId) {
         return tempoServiceImpl.createNewRole(id, role,teamId,userId);
     }
@@ -44,7 +47,10 @@ public class TempoController {
 
     @ApiOperation(value = "Assign a role to a member")
     @PutMapping("/role/{roles}")
-    public ResponseEntity<Object> assignRoleMember(String teamId, String userId, @PathVariable("roles")String roles) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Object> assignRoleMember(@ApiParam(value = "TeamId", example = "0165537a-d71d-4b01-88f3-14f01c2615ad") String teamId,
+                                                   @ApiParam(value = "UserId", example = "3029ce81-1822-4065-a9a2-3d0d1eb5d3ef") String userId,
+                                                   @PathVariable("roles")String roles) {
         return tempoServiceImpl.assignRoleMember(roles, teamId, userId);
     }
 }
