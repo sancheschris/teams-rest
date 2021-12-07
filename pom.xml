@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.tempo</groupId>
 	<artifactId>teams-rest-api-service</artifactId>
-	<version>1.1.10-SNAPSHOT</version>
+	<version>1.1.11-SNAPSHOT</version>
 	<name>teams-rest-api-service</name>
 	<description>Teams Rest API Service</description>
 	<properties>
@@ -109,6 +109,12 @@
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.27.0-GA</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>spring-mock-mvc</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
