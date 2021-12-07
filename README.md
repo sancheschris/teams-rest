@@ -35,20 +35,20 @@
 In my case I getAllThe users and then call save it in a list and then I will loop this list and set the userId in other method who will getUserById.
 
 
-Assume this is an API you can not change, but if you could improve the Team or
-User API what would you ask the developers for to aid you with your task.
+**Assume this is an API you can not change, but if you could improve the Team or
+User API what would you ask the developers for to aid you with your task.**
 
 I would ask them to change the returning of getAllUser, to return all the field of this object or the most important and doing this
 it will do a request to the API only once and then I can save it into my database and then would save more time and performance.
 And this also applies to the teams api as well.
 Other possibility is to do create a pagination on the api and then we can request from the size we want to.
 
-What happens if data you are using gets deleted?
+**What happens if data you are using gets deleted?**
 If I could not save it my database before and I will do a request, then the application
 will throw an exception.
 
 
-In order to Run the application, first of all you need to run up the docker-compose.yaml file on the application's root.
+**In order to Run the application, first of all you need to run up the docker-compose.yaml file on the application's root.**
 
 1 - run the command on the terminal docker-compose up -d
 

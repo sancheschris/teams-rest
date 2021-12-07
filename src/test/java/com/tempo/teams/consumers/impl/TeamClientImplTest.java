@@ -2,6 +2,7 @@ package com.tempo.teams.consumers.impl;
 
 import com.google.gson.Gson;
 import com.tempo.teams.exceptions.InternalServerErrorException;
+import com.tempo.teams.presenter.ResponseTeams;
 import com.tempo.teams.presenter.ResponseUsers;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,13 +24,13 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserClientImplTest {
+public class TeamClientImplTest {
 
     @Mock
     private RestTemplate restTemplate;
 
     @InjectMocks
-    private UserClientImpl userClientImpl;
+    private TeamClientImpl teamClientImpl;
 
     private String url;
 
@@ -39,25 +40,25 @@ public class UserClientImplTest {
 
     @Before
     public void setUp() {
-        ReflectionTestUtils.setField(userClientImpl, "url", "https://www.teste.com.br/");
+        ReflectionTestUtils.setField(teamClientImpl, "url", "https://www.teste.com.br");
     }
 
     private void cenarioStartTest() {
-        this.resourceUri = URI.create("https://www.teste.com.br/");
+        this.resourceUri = URI.create("https://www.teste.com.br");
         this.headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
     }
 
     private void cenarioStartTestById() {
-        this.resourceUri = URI.create("https://www.teste.com.br/id");
+        this.resourceUri = URI.create("https://www.teste.com.br/" + "371d2ee8-cdf4-48cf-9ddb-04798b79ad9e");
         this.headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
     }
 
     @Test
-    public void getUsersFail() {
+    public void getTeamsFail() {
 
         //cenario
         cenarioStartTest();
@@ -67,7 +68,7 @@ public class UserClientImplTest {
                 .thenThrow(new InternalServerErrorException("teste", null));
 
         try {
-            userClientImpl.getUsers();
+            teamClientImpl.getTeams();
             fail();
         } catch (Exception e) {
             assertEquals("teste", e.getMessage());
@@ -75,23 +76,24 @@ public class UserClientImplTest {
     }
 
     @Test
-    public void getUsersSuccess() {
+    public void getTeamsSuccess() {
 
         //cenario
         cenarioStartTest();
 
-        ResponseUsers responseUsers = new ResponseUsers("371d2ee8-cdf4-48cf-9ddb-04798b79ad9e", "randyFunk");
-        List<ResponseUsers> responseUsersList = new ArrayList<>();
-        responseUsersList.add(responseUsers);
+        ResponseTeams responseTeams = new ResponseTeams("371d2ee8-cdf4-48cf-9ddb-04798b79ad9e", "randyFunk");
+        List<ResponseTeams> responseTeamsList = new ArrayList<>();
+        responseTeamsList.add(responseTeams);
 
         //ação
-        String bodyString = new Gson().toJson(responseUsersList);
+        String bodyString = new Gson().toJson(responseTeamsList);
 
         when(restTemplate.exchange(resourceUri, HttpMethod.GET, new HttpEntity<>(headers), String.class))
                 .thenReturn(ResponseEntity.ok(bodyString));
 
-        var expected = userClientImpl.getUsers();
+        var expected = teamClientImpl.getTeams();
 
-        assertEquals("randyFunk", expected.get(0).getDisplayName());
+        assertEquals("randyFunk", expected.get(0).getName());
     }
+
 }

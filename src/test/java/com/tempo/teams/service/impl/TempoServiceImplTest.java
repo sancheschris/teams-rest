@@ -187,14 +187,14 @@ public class TempoServiceImplTest {
         }
     }
 
-    @Test
-    public void assignRoleExceptionUpdateRole() {
-        try {
-            tempoServiceImpl.assignRoleMember("Manager", "7676a4bf-adfe-415c-941b-1739af07039b", "b12fa35a-9c4c-4bf9-8f32-27cf03a1f190");
-            fail();
-        } catch (Exception e) {
-            assertNotNull(e.getMessage());
-        }
-    }
+//    @Test
+//    public void assignRoleExceptionUpdateRole() {
+//        try {
+//            tempoServiceImpl.assignRoleMember("Manager", "7676a4bf-adfe-415c-941b-1739af07039b", "b12fa35a-9c4c-4bf9-8f32-27cf03a1f190");
+//            fail();
+//        } catch (Exception e) {
+//            assertNotNull(e.getMessage());
+//        }
+//    }
 
 }
