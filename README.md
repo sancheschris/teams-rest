@@ -31,6 +31,7 @@
 
   However to get all the users by id to get full details of it, unfourtunately that will be in a loop and will be slow to do it one at time.
   Also, it happens the same way with teams and teams by id.
+  
 
 In my case I getAllThe users and then call save it in a list and then I will loop this list and set the userId in other method who will getUserById.
 
@@ -41,7 +42,8 @@ User API what would you ask the developers for to aid you with your task.**
 I would ask them to change the returning of getAllUser, to return all the field of this object or the most important and doing this
 it will do a request to the API only once and then I can save it into my database and then would save more time and performance.
 And this also applies to the teams api as well.
-Other possibility is to do create a pagination on the api and then we can request from the size we want to.
+Other possibility is to do create a pagination on the api and then we can request from the size we want to. Also, we could create an kafka producer to send to a topic
+the response from getUserById and then the consumer can get from the topic and save it on the database meanwhile it's getting the request and it will reduce the time of processing.
 
 **What happens if data you are using gets deleted?**
 If I could not save it my database before and I will do a request, then the application
